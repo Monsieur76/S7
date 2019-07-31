@@ -13,7 +13,7 @@
 class Posts extends Controller
 {
     /**
-     * @Route("/craetPost",methods={"POST"},name="craetPost")
+     * @Route("/creatPost",methods={"POST"},name="creatPost")
      */
     public function creatPost(Request $request)
     {
@@ -48,6 +48,14 @@ class Posts extends Controller
         $data = $serializer->serialize($find,'json',SerializationContext::create()->setGroups(['list']));
         $response = new Response($data);
         return $response;
+    }
+
+    /**
+     * @Route("/updatePost",name="update",methods={"PUT"})
+     */
+    public function updatePost()
+    {
+
     }
 
 }
