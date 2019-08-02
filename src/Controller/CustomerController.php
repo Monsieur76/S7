@@ -4,6 +4,7 @@
     namespace App\Controller;
 
 
+    use App\model\Valid;
     use FOS\RestBundle\Controller\Annotations as Rest;
     use JMS\Serializer\SerializerBuilder;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -20,7 +21,7 @@
     class CustomerController extends AbstractController
     {
         /**
-         * @Route("/customers",methods={"POST"})
+         * @Route("/customers",methods={"POST"},name="customers")
          */
         public function createCustomer(Request $request)
         {

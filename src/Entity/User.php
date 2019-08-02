@@ -4,10 +4,19 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Hateoas\Configuration\Annotation\Relation;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @Relation("Back", href = "expr('/api/v1/users/' ~ object.Id2())",exclusion = @Hateoas\Exclusion
+ * (groups={"show"}))
+ * @Relation("Next", href = "expr('/api/v1/users/' ~ object.Id1())",exclusion = @Hateoas\Exclusion
+ * (groups={"show"}))
+ * @Relation("List Product", href = "expr('/api/v1/users')",exclusion = @Hateoas\Exclusion
+ * (groups={"show"}))
  */
 class User implements UserInterface
 {
@@ -16,18 +25,20 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Serializer\Type("integer")
+     * @Serializer\Groups({"list","show"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Serializer\Groups({"list","name"})
+     * @Serializer\Groups({"list","show"})
      * @Serializer\Type("string")
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
+     * @Serializer\Groups({"show"})
      */
     private $roles = [];
 
@@ -41,7 +52,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
-     * @Serializer\Groups({"list","name"})
+     * @Serializer\Groups({"list","show"})
      * @Serializer\Type("App\Entity\Customer")
      */
     private $customers;
@@ -129,5 +140,13 @@ class User implements UserInterface
         $this->customers = $customers;
 
         return $this;
+    }
+    public function Id1 ()
+    {
+        return $this->getId() + 1;
+    }
+    public function Id2 ()
+    {
+        return $this->getId() - 1;
     }
 }
