@@ -18,12 +18,11 @@
     /**
      * Class SecurityController
      * @package App\Controller
-     * @Route("/api/v1")
      */
     class SecurityController extends AbstractController
     {
         /**
-         * @Route("/customers/{id}/user", name="register", methods={"POST"})
+         * @Route("/register/{id}", name="register", methods={"POST"})
          */
         public function register(
             $id,
