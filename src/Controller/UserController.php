@@ -19,7 +19,9 @@
      * @package App\Controller
      * @Cache(expires="tomorrow")
      * @Route("/api/v1")
-     */
+     * @Cache(expires="tomorrow")
+     * */
+
     class UserController extends AbstractController
 {
     /**

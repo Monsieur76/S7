@@ -8,6 +8,7 @@
     use Doctrine\ORM\EntityManagerInterface;
     use Hateoas\HateoasBuilder;
     use JMS\Serializer\SerializationContext;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Component\HttpFoundation\Response;
     use FOS\RestBundle\Controller\Annotations as Rest;
     use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,7 @@
      * Class ProductBileMoController
      * @package App\Controller
      * @Route("/api/v1")
+     * @Cache()che(expires="tomorrow")
      */
     class ProductBileMoController
     {

@@ -5,6 +5,7 @@
 
     use FOS\RestBundle\Controller\Annotations as Rest;
     use JMS\Serializer\SerializerBuilder;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +14,7 @@
     /**
      * Class CustomerController
      * @package App\Controller
+     * @Cache(expires="tomorrow")
      * @Rest\Route("/api/v1")
      */
     class CustomerController extends AbstractController
