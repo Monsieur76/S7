@@ -19,6 +19,7 @@
         protected $manager;
         protected $count = 101;
         protected $maxRandom = 100;
+        protected $password = 'moi';
 
         public function __construct(
             UserPasswordEncoderInterface $encoder,
