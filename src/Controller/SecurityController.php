@@ -5,7 +5,6 @@
 
     use App\Entity\User;
     use Doctrine\ORM\EntityManagerInterface;
-    use FOS\RestBundle\Controller\Annotations as Rest;
     use JMS\Serializer\SerializerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
