@@ -2,14 +2,12 @@
 
     namespace App\Controller;
 
-    use App\Entity\Customer;
     use App\Entity\User;
     use Hateoas\HateoasBuilder;
     use JMS\Serializer\SerializationContext;
     use JMS\Serializer\SerializerBuilder;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use FOS\RestBundle\Controller\Annotations as Rest;

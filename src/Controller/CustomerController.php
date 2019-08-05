@@ -3,11 +3,8 @@
 
     namespace App\Controller;
 
-
-    use App\model\Valid;
     use FOS\RestBundle\Controller\Annotations as Rest;
     use JMS\Serializer\SerializerBuilder;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
