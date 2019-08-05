@@ -3,10 +3,19 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Hateoas\Configuration\Annotation\Relation;
 use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProductBileMoRepository")
+ * @Relation("Back", href = "expr('/api/v1/products/' ~ object.Id2())",exclusion = @Hateoas\Exclusion
+ * (groups={"show"}))
+ * @Relation("Next", href = "expr('/api/v1/products/' ~ object.Id1())",exclusion = @Hateoas\Exclusion
+ * (groups={"show"}))
+ * @Relation("List Product", href = "expr('/api/v1/products')",exclusion = @Hateoas\Exclusion
+ * (groups={"show"}))
  */
 class ProductBileMo
 {
@@ -14,6 +23,7 @@ class ProductBileMo
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Groups({"list","show"})
      */
     private $id;
 
@@ -25,7 +35,7 @@ class ProductBileMo
 
     /**
      * @ORM\Column(type="datetime")
-     * @Serializer\Groups({"list","show"})
+     * @Serializer\Groups({"show"})
      */
     private $creatDate;
 
@@ -36,7 +46,9 @@ class ProductBileMo
     private $count;
 
     /**
+     * @Serializer\Groups({"list"})
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Groups({"show"})
      */
     private $uid;
 
@@ -96,5 +108,13 @@ class ProductBileMo
         $this->uid = $uid;
 
         return $this;
+    }
+    public function Id1 ()
+    {
+        return $this->getId() + 1;
+    }
+    public function Id2 ()
+    {
+        return $this->getId() - 1;
     }
 }
