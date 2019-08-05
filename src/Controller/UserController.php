@@ -56,10 +56,10 @@
         $data = $request->getContent();
         $serializer = SerializerBuilder::create()->build();
         $object = $serializer->deserialize($data, 'App\Entity\User', 'json');
-        $name = $object->getUsername();
-        if ($name)
+        $id = $object->getId();
+        if ($id)
         {
-            $user = $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['username'=>$name]);
+            $user = $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id'=>$id]);
             if ($user === null){
                 throw new  NotFoundHttpException('Utilisateur inconnue');
             }
