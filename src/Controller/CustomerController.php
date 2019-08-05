@@ -30,6 +30,7 @@
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
-            return new Response('Client enregistrer',Response::HTTP_CREATED);
+            return new Response('Client enregistrer',Response::HTTP_CREATED,
+                ['Content-Type'=>'application/json']);
         }
     }

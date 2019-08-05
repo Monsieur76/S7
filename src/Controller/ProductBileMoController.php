@@ -27,9 +27,9 @@
         public function showProduct(ProductBileMo $bileMo)
         {
             $hateoas = HateoasBuilder::create()->build();
-            $response = new Response($hateoas->serialize($bileMo,'json',SerializationContext::create()->setGroups(['show'])));
-            $response->headers->set('Content-Type','application/json');
-            return $response;
+            return new Response($hateoas->serialize($bileMo,'json',
+                SerializationContext::create()->setGroups(['show'])),Response::HTTP_OK,
+                ['Content-Type'=>'application/json']);
         }
 
         /**
@@ -39,7 +39,8 @@
         {
             $find = $entityManager->getRepository('App\Entity\ProductBileMo')->findAll();
             $hateoas = HateoasBuilder::create()->build();
-            $response = new Response($hateoas->serialize($find,'json',SerializationContext::create()->setGroups(['list'])));
-            return $response;
+            return new Response($hateoas->serialize($find,'json',
+                SerializationContext::create()->setGroups(['list'])),Response::HTTP_OK
+                ,['Content-Type'=>'application/json']);
         }
     }
