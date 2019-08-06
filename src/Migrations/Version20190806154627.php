@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190805093847 extends AbstractMigration
+final class Version20190806154627 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,7 @@ final class Version20190805093847 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE customer (id INT AUTO_INCREMENT NOT NULL, society VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE product_bile_mo (id INT AUTO_INCREMENT NOT NULL, name_product VARCHAR(255) NOT NULL, creat_date DATETIME NOT NULL, count INT NOT NULL, uid VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE product (id INT AUTO_INCREMENT NOT NULL, name_product VARCHAR(255) NOT NULL, creat_date DATETIME NOT NULL, count INT NOT NULL, uid VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, customers_id INT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649F85E0677 (username), INDEX IDX_8D93D649C3568B40 (customers_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE user ADD CONSTRAINT FK_8D93D649C3568B40 FOREIGN KEY (customers_id) REFERENCES customer (id)');
     }
@@ -35,7 +35,7 @@ final class Version20190805093847 extends AbstractMigration
 
         $this->addSql('ALTER TABLE user DROP FOREIGN KEY FK_8D93D649C3568B40');
         $this->addSql('DROP TABLE customer');
-        $this->addSql('DROP TABLE product_bile_mo');
+        $this->addSql('DROP TABLE product');
         $this->addSql('DROP TABLE user');
     }
 }

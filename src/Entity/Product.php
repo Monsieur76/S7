@@ -9,7 +9,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
 
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProductBileMoRepository")
+ * @ORM\Entity(repositoryClass="ProductRepository")
  * @Relation("Back", href = "expr('/api/v1/products/' ~ object.Id2())",exclusion = @Hateoas\Exclusion
  * (groups={"show"}))
  * @Relation("Next", href = "expr('/api/v1/products/' ~ object.Id1())",exclusion = @Hateoas\Exclusion
@@ -17,7 +17,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Relation("List Product", href = "expr('/api/v1/products')",exclusion = @Hateoas\Exclusion
  * (groups={"show"}))
  */
-class ProductBileMo
+class Product
 {
     /**
      * @ORM\Id()

@@ -2,11 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ProductBileMo;
+use App\Entity\Product;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class ProductBilMoFixture extends BaseFixture implements OrderedFixtureInterface
+class ProductFixture extends BaseFixture implements OrderedFixtureInterface
 {
 
     public function getOrder(){
@@ -16,7 +16,7 @@ class ProductBilMoFixture extends BaseFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
 
-        $this->createMany('product',ProductBileMo::class,$this->count,function (ProductBileMo $bileMo) use ($manager){
+        $this->createMany('product',Product::class,$this->count,function (Product $bileMo) use ($manager){
             $bileMo->setCount(rand(50,500));
             $bileMo->setNameProduct($this->faker->name);
             $bileMo->setUid($this->faker->uuid);

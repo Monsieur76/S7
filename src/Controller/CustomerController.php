@@ -7,9 +7,9 @@
     use JMS\Serializer\SerializerBuilder;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * Class CustomerController
@@ -20,7 +20,7 @@
     class CustomerController extends AbstractController
     {
         /**
-         * @Route("/customers",methods={"POST"},name="customers")
+         * @Rest\Post("/customers",name="customers")
          */
         public function createCustomer(Request $request)
         {
@@ -30,7 +30,6 @@
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
-            return new Response('Client enregistrer',Response::HTTP_CREATED,
-                ['Content-Type'=>'application/json']);
+            return new JsonResponse($data,Response::HTTP_CREATED);
         }
     }
