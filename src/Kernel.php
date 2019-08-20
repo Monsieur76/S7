@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Bazinga\Bundle\HateoasBundle\BazingaHateoasBundle;
+use Nelmio\ApiDocBundle\NelmioApiDocBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -23,6 +25,11 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
+        $bundles = [
+            // …
+            new BazingaHateoasBundle(),
+        ];
+        return $bundles;
     }
 
     public function getProjectDir(): string

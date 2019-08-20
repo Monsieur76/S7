@@ -19,6 +19,16 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id','p.nameProduct','p.count','p.uid')
+            ->orderBy('p.id','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return ProductBileMo[] Returns an array of ProductBileMo objects
     //  */

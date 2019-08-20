@@ -16,7 +16,7 @@ class UserFixture extends BaseFixture implements OrderedFixtureInterface
     {
         $this->createMany('user',User::class,$this->count,function (User $user) use ($manager){
             $password = $this->encoder->encodePassword($user, $this->password);
-            $customer = $this->getReference('customer'.rand(1,$this->maxRandom));
+            $customer = $this->getReference('customer1');
             $user->setUsername($this->faker->userName);
             $user->setCustomers($customer);
             $user->setRoles(['ROLE_USER']);

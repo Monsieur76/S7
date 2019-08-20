@@ -13,8 +13,8 @@
         }
         public function load(ObjectManager $manager)
         {
-            $this->createMany('customer',Customer::class,$this->count,function (Customer $customer) use ($manager){
-                $customer->setSociety($this->faker->company);
+            $this->createMany('customer',Customer::class,2,function (Customer $customer) use ($manager){
+                $customer->setSociety('BileMo');
             });
 
         }

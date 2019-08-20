@@ -17,6 +17,8 @@ class ProductFixture extends BaseFixture implements OrderedFixtureInterface
     {
 
         $this->createMany('product',Product::class,$this->count,function (Product $bileMo) use ($manager){
+            $customer = $this->getReference('customer1');
+            $bileMo->setCustomer($customer);
             $bileMo->setCount(rand(50,500));
             $bileMo->setNameProduct($this->faker->name);
             $bileMo->setUid($this->faker->uuid);

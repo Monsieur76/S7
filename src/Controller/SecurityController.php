@@ -51,7 +51,8 @@
                     $entityManager->persist($user);
                     $entityManager->flush();
 
-                    return new JsonResponse(['message' => 'L\'utilisateur a été créé'], Response::HTTP_CREATED);
+                    return new JsonResponse(['username' => $user->getUsername(),'message'=>'l\'utilisateur a bien été créé'],
+                        Response::HTTP_CREATED);
                 }
                 return new JsonResponse(['message' => 'Vous devez renseigner les clés username et password'],
                     Response::HTTP_INTERNAL_SERVER_ERROR);

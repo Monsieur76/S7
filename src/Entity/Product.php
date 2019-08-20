@@ -6,10 +6,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Hateoas\Configuration\Annotation\Relation;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
- * @ORM\Entity(repositoryClass="ProductRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @Relation("Back", href = "expr('/api/v1/products/' ~ object.Id2())",exclusion = @Hateoas\Exclusion
  * (groups={"show"}))
  * @Relation("Next", href = "expr('/api/v1/products/' ~ object.Id1())",exclusion = @Hateoas\Exclusion
@@ -17,6 +18,7 @@ use Hateoas\Configuration\Annotation as Hateoas;
  * @Relation("List Product", href = "expr('/api/v1/products')",exclusion = @Hateoas\Exclusion
  * (groups={"show"}))
  */
+
 class Product
 {
     /**
@@ -30,18 +32,27 @@ class Product
     /**
      * @ORM\Column(type="string", length=255)
      * @Serializer\Groups({"list","show"})
+     * @Assert\NotBlank(message = "Le nom ne peut être vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom doit comprendre {{ limit }} caractere minimum",
+     *      maxMessage = "Le nom doit comprendre {{ limit }} caractere maximum"
+     * )
      */
     private $nameProduct;
 
     /**
      * @ORM\Column(type="datetime")
      * @Serializer\Groups({"show"})
+     * @Assert\NotBlank(message = "La date ne peut etre vide")
      */
     private $creatDate;
 
     /**
      * @ORM\Column(type="integer")
      * @Serializer\Groups({"list","show"})
+     * @Assert\NotBlank(message = "Le prix ne peut etre vide")
      */
     private $count;
 
@@ -49,8 +60,16 @@ class Product
      * @Serializer\Groups({"list"})
      * @ORM\Column(type="string", length=255)
      * @Serializer\Groups({"show"})
+     * @Assert\NotBlank(message = "Le uid ne peut etre vide")
      */
     private $uid;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="products")
+     * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank()
+     */
+    private $customer;
 
     public function __construct()
     {
@@ -116,5 +135,17 @@ class Product
     public function Id2 ()
     {
         return $this->getId() - 1;
+    }
+
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(?Customer $customer): self
+    {
+        $this->customer = $customer;
+
+        return $this;
     }
 }
