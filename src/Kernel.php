@@ -25,11 +25,6 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
-        $bundles = [
-            // …
-            new BazingaHateoasBundle(),
-        ];
-        return $bundles;
     }
 
     public function getProjectDir(): string

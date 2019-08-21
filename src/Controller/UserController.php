@@ -5,13 +5,9 @@
     use App\Entity\User;
     use App\pager\Pager;
     use App\Repository\UserRepository;
-    use Hateoas\Configuration\Route;
     use Hateoas\HateoasBuilder;
-    use Hateoas\Representation\Factory\PagerfantaFactory;
     use Hateoas\UrlGenerator\CallableUrlGenerator;
     use JMS\Serializer\SerializationContext;
-    use Pagerfanta\Adapter\ArrayAdapter;
-    use Pagerfanta\Pagerfanta;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +31,7 @@
     {
         $hateoas = HateoasBuilder::create()->build();
         $data = $hateoas->serialize($user,'json',SerializationContext::create()->setGroups(['show']));
-        return new JsonResponse($data,Response::HTTP_OK);
+        return new JsonResponse($data,Response::HTTP_OK,array(),true);
     }
 
     /**
@@ -45,13 +41,13 @@
     {
         $hateoas = HateoasBuilder::create()
             ->setUrlGenerator(null, new CallableUrlGenerator(function ($name, $parameters, $absolute) {
-                return sprintf('%s/%s%s', $absolute ? 'http://api/v1/products' : '', $name,  http_build_query($parameters));}))
+                return sprintf('%s/%s%s', $absolute ? 'http://api/v1/users' : '', $name,  http_build_query($parameters));}))
             ->build();
         $pager = new Pager();
         $page = $pager->urlPage($request->getQueryString());
         $find = $repository->findUser();
         $data = $hateoas->serialize($pager->pager($page,$find,'api/v1/users?'),'json');
-        return new JsonResponse($data,Response::HTTP_OK);
+        return new JsonResponse($data,Response::HTTP_OK,array(),true);
     }
 
     /**
@@ -64,6 +60,6 @@
         $em = $this->getDoctrine()->getManager();
         $em->remove($user);
         $em->flush();
-        return new JsonResponse(['id'=>$id,'username'=>$userName] ,Response::HTTP_OK);
+        return new JsonResponse(['id'=>$id,'username'=>$userName,'message'=>'a bien été supprimé'] ,Response::HTTP_OK);
     }
 }

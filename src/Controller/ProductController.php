@@ -6,16 +6,10 @@
     use App\Entity\Product;
     use App\pager\Pager;
     use App\Repository\ProductRepository;
-    use Hateoas\Configuration\Route;
     use Hateoas\HateoasBuilder;
-    use Hateoas\Representation\CollectionRepresentation;
-    use Hateoas\Representation\Factory\PagerfantaFactory;
     use Hateoas\UrlGenerator\CallableUrlGenerator;
-    use Hateoas\UrlGenerator\SymfonyUrlGenerator;
-    use Hateoas\UrlGenerator\UrlGeneratorInterface;
     use JMS\Serializer\SerializationContext;
-    use Pagerfanta\Adapter\ArrayAdapter;
-    use Pagerfanta\Pagerfanta;
+    use JMS\Serializer\SerializerBuilder;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Swagger\Annotations as SWG;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,18 +24,26 @@
      * Class ProductController
      * @package App\Controller
      * @Rest\Route("/api/v1")
-     * @Cache()che(expires="tomorrow")
+     * @Cache(expires="tomorrow")
      */
     class ProductController extends AbstractController
     {
         /**
+         *
          * @Rest\Get("/products/{id}")
+         * @SWG\Response(
+         *     response=200,
+         *     description="Returns the rewards of an user",
+         *     @SWG\Schema(
+         *         type="array",
+         *         @SWG\Items(ref=@Model(type=Reward::class, groups={"full"}))
+         *     ))
          */
         public function showProduct(Product $product)
         {
             $hateoas = HateoasBuilder::create()->build();
-            return new JsonResponse($hateoas->serialize($product,'json',
-                SerializationContext::create()->setGroups(['show'])),Response::HTTP_OK);
+            $response = $hateoas->serialize($product,'json',SerializationContext::create()->setGroups(['show']));
+            return new JsonResponse($response,Response::HTTP_OK,array(),true);
         }
 
         /**
@@ -49,6 +51,7 @@
          */
         public function listProduct(ProductRepository $repository,Request $request)
         {
+            $serializer = SerializerBuilder::create()->build();
             $hateoas = HateoasBuilder::create()
                 ->setUrlGenerator(null, new CallableUrlGenerator(function ($name, $parameters, $absolute) {
                     return sprintf('%s/%s%s', $absolute ? 'http://api/v1/products' : '',
@@ -57,6 +60,7 @@
             $pager = new Pager();
             $page = $pager->urlPage($request->getQueryString());
             $find = $repository->findProduct();
-            return new JsonResponse($hateoas->serialize($pager->pager($page,$find,'api/v1/products?'),'json'),Response::HTTP_OK);
+            $response = $hateoas->serialize($pager->pager($page,$find,'api/v1/products?'),'json');
+            return new JsonResponse($response,Response::HTTP_OK,array(),true);
         }
     }

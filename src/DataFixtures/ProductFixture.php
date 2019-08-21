@@ -20,7 +20,7 @@ class ProductFixture extends BaseFixture implements OrderedFixtureInterface
             $customer = $this->getReference('customer1');
             $bileMo->setCustomer($customer);
             $bileMo->setCount(rand(50,500));
-            $bileMo->setNameProduct($this->faker->name);
+            $bileMo->setNameProduct($this->faker->domainName);
             $bileMo->setUid($this->faker->uuid);
         });
     }
