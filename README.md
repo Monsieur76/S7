@@ -3,6 +3,7 @@
 ### In the .env file
 1. In DATABASE URL put your database url.
 2. Download dependencies to compose.
+3. For API documentation go to `api/doc.json`
 
 ### Before you put the api online
 * Configure the .env file
