@@ -1,0 +1,19 @@
+nelmio_api_doc:
+    areas:
+        path_patterns: # an array of regexps
+            - ^/api(?!/doc$)
+        host_patterns:
+            - ^api\.
+    documentation:
+        host: api/v1
+        schemes: [http]
+        info:
+            title: Api BileMo
+            description: Api for search product
+            version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {jwt}'
+                name: Authorization
+                in: header

@@ -7,6 +7,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Hateoas\Configuration\Annotation\Relation;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -33,12 +34,20 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      * @Serializer\Groups({"list","show"})
      * @Serializer\Type("string")
+     * @Assert\NotBlank( message = "Le nom ne peut etre vide")
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 50,
+     *      minMessage = "Le nom doit comprendre {{ limit }} caractere minimum",
+     *      maxMessage = "Le nom doit comprendre {{ limit }} caractere maximum"
+     * )
      */
     private $username;
 
     /**
      * @ORM\Column(type="json")
      * @Serializer\Groups({"show"})
+     * @Assert\NotBlank()
      */
     private $roles = [];
 
@@ -46,6 +55,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      * @Serializer\Type("string")
+     * @Assert\NotBlank(message = "Le mot de pass ne peut etre vide")
      */
     private $password;
 
@@ -54,6 +64,7 @@ class User implements UserInterface
      * @ORM\JoinColumn(nullable=false)
      * @Serializer\Groups({"list","show"})
      * @Serializer\Type("App\Entity\Customer")
+     * @Assert\NotBlank()
      */
     private $customers;
 

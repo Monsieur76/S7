@@ -2,21 +2,31 @@
 
 namespace App\Repository;
 
-use App\Entity\ProductBileMo;
+use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method ProductBileMo|null find($id, $lockMode = null, $lockVersion = null)
- * @method ProductBileMo|null findOneBy(array $criteria, array $orderBy = null)
- * @method ProductBileMo[]    findAll()
- * @method ProductBileMo[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Product|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Product|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Product[]    findAll()
+ * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ProductBileMoRepository extends ServiceEntityRepository
+class ProductRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, ProductBileMo::class);
+        parent::__construct($registry, Product::class);
+    }
+
+    public function findProduct()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id','p.nameProduct','p.count','p.uid')
+            ->orderBy('p.id','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     // /**
