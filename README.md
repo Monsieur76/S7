@@ -2,8 +2,7 @@
 ## Install
 ### In the .env file
 1. In DATABASE URL put your database url.
-2. To configure the sending of mail replace in MAILER_URL.
-3. Download dependencies to compose.
+2. Download dependencies to compose.
 
 ### Before you put the api online
 * Configure the .env file
