@@ -14,6 +14,9 @@
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use FOS\RestBundle\Controller\Annotations as Rest;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Swagger\Annotations as SWG;
+
 
     /**
      * Class UserController
@@ -25,7 +28,18 @@
     class UserController extends AbstractController
 {
     /**
-     * @Rest\Get("/users/{id}")
+     * @Route("/users/{id}", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Show one user",
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Items(ref="/users/{id}")
+     * ))
+     * @SWG\Parameter(
+     *          name="order",
+     *          in="query",
+     *          type="string")
      */
     public function showUser(User $user)
     {
@@ -35,7 +49,18 @@
     }
 
     /**
-     * @Rest\Get("/users")
+     * @Route("/users", methods={"GET"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="List an user",
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Items(ref="/users")
+     * ))
+     * @SWG\Parameter(
+     *          name="order",
+     *          in="query",
+     *          type="string")
      */
     public function listUser(UserRepository $repository,Request $request)
     {
@@ -51,7 +76,18 @@
     }
 
     /**
-     * @Rest\Delete("/users/{id}")
+     * @Route("/users/{id}", methods={"DELETE"})
+     * @SWG\Response(
+     *     response=200,
+     *     description="Delete an user",
+     *     @SWG\Schema(
+     *         type="object",
+     *         @SWG\Items(ref="/users/{id}")
+     * ))
+     * @SWG\Parameter(
+     *          name="order",
+     *          in="query",
+     *          type="string")
      */
     public function deleteUser($id,UserRepository $repository)
     {

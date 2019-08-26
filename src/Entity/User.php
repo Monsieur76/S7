@@ -5,9 +5,11 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Hateoas\Configuration\Annotation\Relation;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
 
 
 /**
@@ -18,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * (groups={"show"}))
  * @Relation("List Product", href = "expr('/api/v1/users')",exclusion = @Hateoas\Exclusion
  * (groups={"show"}))
+ * @UniqueEntity(fields={"username"},message="l'utilisateur est déjà enregistrer")
  */
 class User implements UserInterface
 {
@@ -27,6 +30,7 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @Serializer\Type("integer")
      * @Serializer\Groups({"list","show"})
+     * @SWG\Property(description="Id user")
      */
     private $id;
 
@@ -41,6 +45,7 @@ class User implements UserInterface
      *      minMessage = "Le nom doit comprendre {{ limit }} caractere minimum",
      *      maxMessage = "Le nom doit comprendre {{ limit }} caractere maximum"
      * )
+     * @SWG\Property(description="username for user")
      */
     private $username;
 
@@ -48,6 +53,7 @@ class User implements UserInterface
      * @ORM\Column(type="json")
      * @Serializer\Groups({"show"})
      * @Assert\NotBlank()
+     * @SWG\Property(description="Role for user, security")
      */
     private $roles = [];
 
@@ -56,6 +62,7 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      * @Serializer\Type("string")
      * @Assert\NotBlank(message = "Le mot de pass ne peut etre vide")
+     * @SWG\Property(description="Password user for security")
      */
     private $password;
 
@@ -65,6 +72,7 @@ class User implements UserInterface
      * @Serializer\Groups({"list","show"})
      * @Serializer\Type("App\Entity\Customer")
      * @Assert\NotBlank()
+     * @SWG\Property(description="ManyToOne user -> customer")
      */
     private $customers;
 

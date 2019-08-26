@@ -6,11 +6,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
-use phpDocumentor\Reflection\Types\Array_;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CustomerRepository")
+ * @UniqueEntity( fields = {"society"}
+ *     ,message="Cette societé est déjà enregistré")
  */
 class Customer
 {
@@ -18,6 +22,7 @@ class Customer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @SWG\Property(description="Id customer")
      */
     private $id;
 
@@ -26,18 +31,21 @@ class Customer
      * @Serializer\Type("string")
      * @Serializer\Groups({"list","name"})
      * @Assert\NotBlank(message = "Le nom ne peut etre vide")
+     * @SWG\Property(description="Society of customer")
      */
     private $society;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="customers")
      * @Assert\NotBlank()
+     * @SWG\Property(description="OneToMany customer -> user")
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="customer", orphanRemoval=true)
      * @Assert\NotBlank()
+     * @SWG\Property(description="OneToMany customer -> product")
      */
     private $products;
 

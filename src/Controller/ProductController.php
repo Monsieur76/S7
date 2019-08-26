@@ -9,7 +9,6 @@
     use Hateoas\HateoasBuilder;
     use Hateoas\UrlGenerator\CallableUrlGenerator;
     use JMS\Serializer\SerializationContext;
-    use JMS\Serializer\SerializerBuilder;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Swagger\Annotations as SWG;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,6 +17,7 @@
     use Symfony\Component\HttpFoundation\Response;
     use FOS\RestBundle\Controller\Annotations as Rest;
     use Nelmio\ApiDocBundle\Annotation\Model;
+    use Symfony\Component\Routing\Annotation\Route;
 
 
     /**
@@ -30,13 +30,14 @@
     {
         /**
          *
-         * @Rest\Get("/products/{id}")
+         * @Route("/products/{id}", methods={"GET"})
          * @SWG\Response(
          *     response=200,
-         *     description="Returns the rewards of an user",
+         *     description="Returns the show of product",
          *     @SWG\Schema(
-         *         type="array",
-         *         @SWG\Items(ref=@Model(type=Reward::class, groups={"full"}))
+         *         type="object",
+         *         @SWG\Items(ref="/products/{id}"),
+         *         @SWG\Items(ref=@Model(type=Product::class))
          *     ))
          */
         public function showProduct(Product $product)
@@ -47,11 +48,21 @@
         }
 
         /**
-         * @Rest\Get("/products",name="products")
+         * @Route("/products",name="products", methods={"GET"})
+         *     @SWG\Response(
+         *     response=200,
+         *     description="Returns the list of product ",
+         *     @SWG\Schema(
+         *         type="object",
+         *         @SWG\Items(ref="/products")
+         * ))
+         * @SWG\Parameter(
+         *          name="order",
+         *          in="query",
+         *          type="string")
          */
         public function listProduct(ProductRepository $repository,Request $request)
         {
-            $serializer = SerializerBuilder::create()->build();
             $hateoas = HateoasBuilder::create()
                 ->setUrlGenerator(null, new CallableUrlGenerator(function ($name, $parameters, $absolute) {
                     return sprintf('%s/%s%s', $absolute ? 'http://api/v1/products' : '',
