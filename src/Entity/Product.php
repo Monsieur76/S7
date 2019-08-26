@@ -6,7 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Hateoas\Configuration\Annotation\Relation;
 use JMS\Serializer\Annotation as Serializer;
 use Hateoas\Configuration\Annotation as Hateoas;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Swagger\Annotations as SWG;
+
 
 
 /**
@@ -17,6 +20,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * (groups={"show"}))
  * @Relation("List Product", href = "expr('/api/v1/products')",exclusion = @Hateoas\Exclusion
  * (groups={"show"}))
+ * @UniqueEntity(fields={"nameProduct","uid"})
+ * @
  */
 
 class Product
@@ -25,7 +30,8 @@ class Product
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Serializer\Groups({"list","show"})
+     * @Serializer\Groups({"list","show"}).
+     * @SWG\Property(description="Id product")
      */
     private $id;
 
@@ -39,6 +45,7 @@ class Product
      *      minMessage = "Le nom doit comprendre {{ limit }} caractere minimum",
      *      maxMessage = "Le nom doit comprendre {{ limit }} caractere maximum"
      * )
+     * @SWG\Property(description="name product")
      */
     private $nameProduct;
 
@@ -46,6 +53,7 @@ class Product
      * @ORM\Column(type="datetime")
      * @Serializer\Groups({"show"})
      * @Assert\NotBlank(message = "La date ne peut etre vide")
+     *  @SWG\Property(description="Creation Date of product")
      */
     private $creatDate;
 
@@ -53,6 +61,7 @@ class Product
      * @ORM\Column(type="integer")
      * @Serializer\Groups({"list","show"})
      * @Assert\NotBlank(message = "Le prix ne peut etre vide")
+     *  @SWG\Property(description="count product")
      */
     private $count;
 
@@ -61,6 +70,7 @@ class Product
      * @ORM\Column(type="string", length=255)
      * @Serializer\Groups({"show"})
      * @Assert\NotBlank(message = "Le uid ne peut etre vide")
+     *  @SWG\Property(description="uid product")
      */
     private $uid;
 
@@ -68,6 +78,7 @@ class Product
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="products")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank()
+     *  @SWG\Property(description="ManyToOne for customer")
      */
     private $customer;
 
