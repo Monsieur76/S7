@@ -7,6 +7,7 @@
     use App\Repository\CustomerRepository;
     use Doctrine\ORM\EntityManagerInterface;
     use JMS\Serializer\SerializerInterface;
+    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@
     /**
      * Class SecurityController
      * @package App\Controller
+     * @Rest\Route("/api/v1")
      */
     class SecurityController extends AbstractController
     {
