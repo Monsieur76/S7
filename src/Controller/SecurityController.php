@@ -6,6 +6,7 @@
     use App\Entity\User;
     use App\Repository\CustomerRepository;
     use Doctrine\ORM\EntityManagerInterface;
+    use FOS\RestBundle\Controller\Annotations as Rest;
     use JMS\Serializer\SerializerInterface;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
